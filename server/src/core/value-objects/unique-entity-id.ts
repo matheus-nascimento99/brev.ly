@@ -7,10 +7,10 @@ export class UniqueEntityId extends ValueObject<string> {
   }
 
   toString() {
-    return this.value
+    return this.props
   }
 
   toValue() {
-    return this.value
+    return this.props
   }
 }
