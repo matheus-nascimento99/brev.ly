@@ -11,5 +11,7 @@ export abstract class LinksRepository {
 
   abstract save(linkId: UniqueEntityId, link: Link): Promise<void>
 
+  abstract streamLinks(): AsyncIterable<Link[]>
+
   abstract delete(linkId: UniqueEntityId): Promise<void>
 }

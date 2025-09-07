@@ -45,4 +45,10 @@ export class InMemoryLinksRepository implements LinksRepository {
   async delete(linkId: UniqueEntityId): Promise<void> {
     this.items.delete(linkId.toString())
   }
+
+  async *streamLinks(): AsyncIterable<Link[]> {
+    yield Array.from(this.items.values()).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    )
+  }
 }
