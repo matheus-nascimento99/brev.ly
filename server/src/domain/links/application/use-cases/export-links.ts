@@ -1,10 +1,13 @@
-import { Either, right } from '@/core/errors/either'
+import { type Either, right } from '@/core/errors/either'
 import { stringify } from 'csv-stringify'
 import { PassThrough, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
-import { Link } from '../../enterprise/entities/link'
-import { LinksRepository } from '../repositories/links'
-import { StorageUploader, StorageUploaderFolder } from '../storage/storage-uploader'
+import type { Link } from '../../enterprise/entities/link'
+import type { LinksRepository } from '../repositories/links'
+import {
+  type StorageUploader,
+  StorageUploaderFolder,
+} from '../storage/storage-uploader'
 
 type ExportLinksUseCaseResponse = Either<
   never,
@@ -14,7 +17,10 @@ type ExportLinksUseCaseResponse = Either<
 >
 
 export class ExportLinksUseCase {
-  constructor(private linksRepository: LinksRepository, private storageUploader: StorageUploader) {}
+  constructor(
+    private linksRepository: LinksRepository,
+    private storageUploader: StorageUploader
+  ) {}
 
   async execute(): Promise<ExportLinksUseCaseResponse> {
     // Stream Links from Database
@@ -61,9 +67,9 @@ export class ExportLinksUseCase {
     const folder = StorageUploaderFolder.DOWNLOADS
 
     const fileName = `${Date.now()}-link.csv`
-    
+
     const contentType = 'text/csv'
-    
+
     const contentStream = uploadToStorageStream
 
     const uploadToStorage = this.storageUploader.upload({
@@ -76,7 +82,7 @@ export class ExportLinksUseCase {
     // Await both upload and pipeline completion
     const [{ url: reportUrl }] = await Promise.all([
       uploadToStorage,
-      uploadToStoragePipeline
+      uploadToStoragePipeline,
     ])
 
     return right({
