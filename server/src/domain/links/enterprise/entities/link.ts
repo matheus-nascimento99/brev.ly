@@ -36,7 +36,7 @@ export class Link extends Entity<LinkProps> {
   }
 
   increment() {
-    this.props.accessCount = this.props.accessCount++
+    this.props.accessCount = this.props.accessCount + 1
   }
 
   static create(

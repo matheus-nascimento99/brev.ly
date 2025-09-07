@@ -9,5 +9,7 @@ export abstract class LinksRepository {
   abstract findMany(): Promise<Link[]>
   abstract findByShortUrl(shortUrl: Raw): Promise<Link | null>
 
+  abstract save(linkId: UniqueEntityId, link: Link): Promise<void>
+
   abstract delete(linkId: UniqueEntityId): Promise<void>
 }

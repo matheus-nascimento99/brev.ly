@@ -38,6 +38,10 @@ export class InMemoryLinksRepository implements LinksRepository {
     return link
   }
 
+  async save(linkId: UniqueEntityId, link: Link): Promise<void> {
+    this.items.set(linkId.toString(), link)
+  }
+
   async delete(linkId: UniqueEntityId): Promise<void> {
     this.items.delete(linkId.toString())
   }
