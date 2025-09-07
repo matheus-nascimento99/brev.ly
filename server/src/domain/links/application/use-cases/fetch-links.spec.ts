@@ -1,4 +1,4 @@
-import { makeLink } from '../../../../../test/factories/link'
+import { makeLink } from '../../../../../test/factories/make-link'
 import { InMemoryLinksRepository } from '../../../../../test/in-memory/links'
 import { FetchLinksUseCase } from './fetch-links'
 

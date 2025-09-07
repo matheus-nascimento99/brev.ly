@@ -1,5 +1,5 @@
 import { fakerPT_BR as faker } from '@faker-js/faker'
-import { makeLink } from '../../../../../test/factories/link'
+import { makeLink } from '../../../../../test/factories/make-link'
 import { InMemoryLinksRepository } from '../../../../../test/in-memory/links'
 import { CreateLinkUseCase } from './create-link'
 import { LinkWithShortUrlAlreadyExistsError } from './errors/link-with-short-url-already-exists'
