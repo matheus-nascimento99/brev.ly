@@ -3,7 +3,7 @@ import { Entity } from '@/core/entities/entity'
 import type { UniqueEntityId } from '@/core/value-objects/unique-entity-id'
 import type { Raw } from '../value-objects/raw'
 
-type LinkProps = {
+export type LinkProps = {
   originalUrl: string
   shortUrl: Raw
   accessCount: number
@@ -39,7 +39,10 @@ export class Link extends Entity<LinkProps> {
     this.props.accessCount = this.props.accessCount++
   }
 
-  static create(props: Optional<LinkProps, 'accessCount' | 'createdAt'>, id?: UniqueEntityId) {
+  static create(
+    props: Optional<LinkProps, 'accessCount' | 'createdAt'>,
+    id?: UniqueEntityId
+  ) {
     const link = new Link(
       {
         ...props,
