@@ -27,7 +27,7 @@ describe('Create link use case', () => {
   it('should not be able to create a link with same short url of another link', async () => {
     const link = makeLink()
     inMemoryLinksRepository.create(link)
-    
+
     const result = await sut.execute({
       originalUrl: faker.internet.url(),
       shortUrl: link.shortUrl.value,
