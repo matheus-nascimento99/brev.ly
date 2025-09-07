@@ -21,7 +21,9 @@ export class InMemoryLinksRepository implements LinksRepository {
   }
 
   async findMany(): Promise<Link[]> {
-    return Array.from(this.items.values())
+    return Array.from(this.items.values()).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    )
   }
 
   async findByShortUrl(shortUrl: Raw): Promise<Link | null> {
