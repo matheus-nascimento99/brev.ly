@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRESQL_USERNAME=docker
       - POSTGRESQL_PASSWORD=docker
-      - POSTGRESQL_DATABASE=upload
+      - POSTGRESQL_DATABASE=brevly
     volumes:
       - "./docker:/docker-entrypoint-initdb.d"
 

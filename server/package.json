@@ -6,7 +6,10 @@
     "dev": "node --no-warnings --watch src/infra/http/server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +22,7 @@
     "csv-stringify": "^6.6.0",
     "fastify": "^5.5.0",
     "fastify-type-provider-zod": "^6.0.0",
+    "http-status": "^2.1.0",
     "zod": "^4.1.5"
   },
   "devDependencies": {
