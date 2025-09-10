@@ -10,6 +10,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link.ts'
+import { deleteLinkRoute } from './routes/delete-link.ts'
 
 const app = fastify()
 
@@ -60,5 +61,6 @@ app.get('/openapi.json', async () => {
 })
 
 app.register(createLinkRoute)
+app.register(deleteLinkRoute)
 
 export default app
