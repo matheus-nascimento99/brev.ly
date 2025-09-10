@@ -1,5 +1,5 @@
-import { makeLink } from '../../../../../test/factories/make-link'
-import { InMemoryLinksRepository } from '../../../../../test/in-memory/links'
+import { makeLink } from '../../../../../test/factories/make-link.ts'
+import { InMemoryLinksRepository } from '../../../../../test/in-memory/links.ts'
 import { FetchLinksUseCase } from './fetch-links'
 
 let inMemoryLinksRepository: InMemoryLinksRepository

@@ -1,9 +1,9 @@
-import { type Either, left, right } from '@/core/errors/either'
 import z from 'zod'
+import { type Either, left, right } from '../../../../core/errors/either'
 import type { Link } from '../../enterprise/entities/link'
-import { Raw } from '../../enterprise/value-objects/raw'
-import type { LinksRepository } from '../repositories/links'
-import { ResourceNotFoundError } from './errors/resource-not-found'
+import { Raw } from '../../enterprise/value-objects/raw.ts'
+import type { LinksRepository } from '../repositories/links.ts'
+import { ResourceNotFoundError } from './errors/resource-not-found.ts'
 
 const getLinkByShortUrlUseCaseSchema = z.object({
   shortUrl: z.string().min(1, 'Informe a URL encurtada.'),

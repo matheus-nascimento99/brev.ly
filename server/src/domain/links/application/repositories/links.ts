@@ -1,6 +1,6 @@
-import type { UniqueEntityId } from '@/core/value-objects/unique-entity-id'
-import type { Link } from '../../enterprise/entities/link'
-import type { Raw } from '../../enterprise/value-objects/raw'
+import type { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
+import type { Link } from '../../enterprise/entities/link.ts'
+import type { Raw } from '../../enterprise/value-objects/raw.ts'
 
 export abstract class LinksRepository {
   abstract create(link: Link): Promise<void>

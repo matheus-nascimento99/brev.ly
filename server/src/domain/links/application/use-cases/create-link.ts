@@ -1,9 +1,9 @@
-import { type Either, left, right } from '@/core/errors/either'
 import z from 'zod'
-import { Link } from '../../enterprise/entities/link'
-import { Raw } from '../../enterprise/value-objects/raw'
-import type { LinksRepository } from '../repositories/links'
-import { LinkWithShortUrlAlreadyExistsError } from './errors/link-with-short-url-already-exists'
+import { type Either, left, right } from '../../../../core/errors/either'
+import { Link } from '../../enterprise/entities/link.ts'
+import { Raw } from '../../enterprise/value-objects/raw.ts'
+import type { LinksRepository } from '../repositories/links.ts'
+import { LinkWithShortUrlAlreadyExistsError } from './errors/link-with-short-url-already-exists.ts'
 
 const createLinkUseCaseSchema = z.object({
   originalUrl: z.url({ error: 'URL inválida.' }),

@@ -1,6 +1,6 @@
-import { type Either, right } from '@/core/errors/either'
-import type { Link } from '../../enterprise/entities/link'
-import type { LinksRepository } from '../repositories/links'
+import { type Either, right } from '../../../../core/errors/either'
+import type { Link } from '../../enterprise/entities/link.ts'
+import type { LinksRepository } from '../repositories/links.ts'
 
 type FetchLinksUseCaseResponse = Either<
   never,

@@ -1,6 +1,6 @@
-import type { Optional } from '@/core/@types/optional'
-import { Entity } from '@/core/entities/entity'
-import type { UniqueEntityId } from '@/core/value-objects/unique-entity-id'
+import type { Optional } from '../../../../core/@types/optional'
+import { Entity } from '../../../../core/entities/entity.ts'
+import type { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id'
 import type { Raw } from '../value-objects/raw'
 
 export type LinkProps = {

@@ -1,7 +1,7 @@
-import type { UniqueEntityId } from '@/core/value-objects/unique-entity-id'
-import type { LinksRepository } from '@/domain/links/application/repositories/links'
-import type { Link } from '@/domain/links/enterprise/entities/link'
-import type { Raw } from '@/domain/links/enterprise/value-objects/raw'
+import type { UniqueEntityId } from '../../src/core/value-objects/unique-entity-id.ts'
+import type { LinksRepository } from '../../src/domain/links/application/repositories/links.ts'
+import type { Link } from '../../src/domain/links/enterprise/entities/link.ts'
+import type { Raw } from '../../src/domain/links/enterprise/value-objects/raw.ts'
 
 export class InMemoryLinksRepository implements LinksRepository {
   public items: Map<string, Link> = new Map()

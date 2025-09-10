@@ -1,5 +1,5 @@
-import { CreateLinkUseCase } from "@/domain/links/application/use-cases/create-link"
-import { DrizzleLinksRepository } from "@/infra/database/drizzle/repositories/links"
+import { CreateLinkUseCase } from '../../../domain/links/application/use-cases/create-link.ts'
+import { DrizzleLinksRepository } from '../../database/drizzle/repositories/links.ts'
 
 export const makeCreateLink = () => {
   const linksRepository = new DrizzleLinksRepository()

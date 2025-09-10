@@ -3,13 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --no-warnings --watch src/infra/http/server.ts",
+    "dev": "tsx watch --env-file .env src/infra/http/server.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "test:e2e": "dotenv -e .env.test -- vitest run --config vitest.config.e2e.ts",
+    
+    "db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
+    
+    "pretest:e2e": "npm run db:migrate:test",
+    "pretest:e2e:watch": "npm run db:migrate:test"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +36,10 @@
     "@biomejs/biome": "2.2.3",
     "@faker-js/faker": "^10.0.0",
     "@types/node": "^24.3.1",
+    "@types/supertest": "^6.0.3",
+    "dotenv-cli": "^10.0.0",
+    "supertest": "^7.1.4",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "unplugin-swc": "^1.5.7",
     "vitest": "^3.2.4",

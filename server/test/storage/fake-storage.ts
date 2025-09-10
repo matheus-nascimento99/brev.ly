@@ -1,13 +1,13 @@
+import { faker } from '@faker-js/faker'
+import { randomUUID } from 'node:crypto'
+import { basename, extname } from 'node:path'
 import {
   type StorageUploader,
   type StorageUploaderRequest,
   type StorageUploaderResponse,
   storageUploaderRequestSchema,
   storageUploaderResponseSchema,
-} from '@/domain/links/application/storage/storage-uploader'
-import { faker } from '@faker-js/faker'
-import { randomUUID } from 'node:crypto'
-import { basename, extname } from 'node:path'
+} from '../../src/domain/links/application/storage/storage-uploader'
 
 export class FakeStorage implements StorageUploader {
   public files: Map<string, Buffer> = new Map()

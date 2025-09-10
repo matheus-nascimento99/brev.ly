@@ -1,9 +1,9 @@
-import { type Either, right } from '@/core/errors/either'
 import { stringify } from 'csv-stringify'
 import { PassThrough, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
-import type { Link } from '../../enterprise/entities/link'
-import type { LinksRepository } from '../repositories/links'
+import { type Either, right } from '../../../../core/errors/either'
+import type { Link } from '../../enterprise/entities/link.ts'
+import type { LinksRepository } from '../repositories/links.ts'
 import {
   type StorageUploader,
   StorageUploaderFolder,

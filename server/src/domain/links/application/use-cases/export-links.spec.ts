@@ -1,6 +1,6 @@
-import { makeLink } from '../../../../../test/factories/make-link'
-import { InMemoryLinksRepository } from '../../../../../test/in-memory/links'
-import { FakeStorage } from '../../../../../test/storage/fake-storage'
+import { makeLink } from '../../../../../test/factories/make-link.ts'
+import { InMemoryLinksRepository } from '../../../../../test/in-memory/links.ts'
+import { FakeStorage } from '../../../../../test/storage/fake-storage.ts'
 import { ExportLinksUseCase } from './export-links'
 
 let inMemoryLinksRepository: InMemoryLinksRepository

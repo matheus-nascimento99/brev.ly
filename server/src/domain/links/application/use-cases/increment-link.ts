@@ -1,8 +1,8 @@
-import { type Either, left, right } from '@/core/errors/either'
-import { UniqueEntityId } from '@/core/value-objects/unique-entity-id'
 import z from 'zod'
-import type { LinksRepository } from '../repositories/links'
-import { ResourceNotFoundError } from './errors/resource-not-found'
+import { type Either, left, right } from '../../../../core/errors/either'
+import { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
+import type { LinksRepository } from '../repositories/links.ts'
+import { ResourceNotFoundError } from './errors/resource-not-found.ts'
 
 const incrementLinkUseCaseRequestSchema = z.object({
   linkId: z.uuid({ error: 'ID do link inválido.' }),

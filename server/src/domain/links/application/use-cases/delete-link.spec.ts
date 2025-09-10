@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
-import { makeLink } from '../../../../../test/factories/make-link'
-import { InMemoryLinksRepository } from '../../../../../test/in-memory/links'
+import { makeLink } from '../../../../../test/factories/make-link.ts'
+import { InMemoryLinksRepository } from '../../../../../test/in-memory/links.ts'
 import { DeleteLinkUseCase } from './delete-link'
 import { ResourceNotFoundError } from './errors/resource-not-found'
 

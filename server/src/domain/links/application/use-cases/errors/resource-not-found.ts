@@ -1,4 +1,4 @@
-import { UseCaseError } from '@/core/errors/use-case'
+import { UseCaseError } from '../../../../../core/errors/use-case.ts'
 
 export class ResourceNotFoundError extends UseCaseError {
   constructor(

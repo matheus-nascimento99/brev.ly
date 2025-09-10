@@ -1,4 +1,4 @@
-import { ValueObject } from "@/core/value-objects/value-object"
+import { ValueObject } from '../../../../core/value-objects/value-object.ts'
 
 export class Raw extends ValueObject<string> {
   get value() {
@@ -39,12 +39,12 @@ export class Raw extends ValueObject<string> {
         .trim()
         .toLowerCase()
         // Replace specific special characters first
-        .replace(/[æœßøłđðþçñ]/g, (char) => specialChars[char])
+        .replace(/[æœßøłđðþçñ]/g, char => specialChars[char])
         // Normalize and remove diacritics
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         // Remove all non-alphanumeric chars
-        .replace(/[^a-z0-9]/g, ''),
+        .replace(/[^a-z0-9]/g, '')
     )
   }
 }
