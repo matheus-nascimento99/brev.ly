@@ -11,6 +11,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link.ts'
 import { deleteLinkRoute } from './routes/delete-link.ts'
+import { incrementLinkRoute } from './routes/increment-link.ts'
 
 const app = fastify()
 
@@ -62,5 +63,6 @@ app.get('/openapi.json', async () => {
 
 app.register(createLinkRoute)
 app.register(deleteLinkRoute)
+app.register(incrementLinkRoute)
 
 export default app
