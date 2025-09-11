@@ -1,6 +1,7 @@
-import { eq } from 'drizzle-orm'
+import { desc, eq, ilike } from 'drizzle-orm'
 import type { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id'
 import type { LinksRepository } from '../../../../domain/links/application/repositories/links'
+import { FetchLinksUseCaseRequest } from '../../../../domain/links/application/use-cases/fetch-links.ts'
 import type { Link } from '../../../../domain/links/enterprise/entities/link'
 import type { Raw } from '../../../../domain/links/enterprise/value-objects/raw'
 import { db, pg } from '../../db.ts'
@@ -27,8 +28,16 @@ export class DrizzleLinksRepository implements LinksRepository {
 
     return DrizzleLinksMapper.toDomain(link)
   }
-  async findMany(): Promise<Link[]> {
-    const links = await db.select().from(schema.links)
+  async findMany({ originalUrl }: FetchLinksUseCaseRequest): Promise<Link[]> {
+    const links = await db
+      .select()
+      .from(schema.links)
+      .where(
+        originalUrl
+          ? ilike(schema.links.originalUrl, `%${originalUrl}%`)
+          : undefined
+      )
+      .orderBy(desc(schema.links.createdAt))
 
     return links.map(DrizzleLinksMapper.toDomain)
   }

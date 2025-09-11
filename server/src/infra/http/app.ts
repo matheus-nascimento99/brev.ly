@@ -11,6 +11,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link.ts'
 import { deleteLinkRoute } from './routes/delete-link.ts'
+import { fetchLinksRoute } from './routes/fetch-links.ts'
 import { getLinkByShortUrlRoute } from './routes/get-link-by-short-url.ts'
 import { incrementLinkRoute } from './routes/increment-link.ts'
 
@@ -66,5 +67,6 @@ app.register(createLinkRoute)
 app.register(deleteLinkRoute)
 app.register(incrementLinkRoute)
 app.register(getLinkByShortUrlRoute)
+app.register(fetchLinksRoute)
 
 export default app

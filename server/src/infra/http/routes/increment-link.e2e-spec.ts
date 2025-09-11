@@ -7,7 +7,7 @@ import { schema } from '../../database/drizzle/schemas/index.ts'
 import app from '../app.ts'
 
 describe('Increment Link (e2e)', () => {
-  test('/links (INCREMENT)', async () => {
+  test('/links (PATCH)', async () => {
     const link = await makeDrizzleLink({})
 
     await request(app.server)
