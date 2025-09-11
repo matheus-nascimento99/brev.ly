@@ -1,5 +1,6 @@
 import type { UniqueEntityId } from '../../src/core/value-objects/unique-entity-id.ts'
 import type { LinksRepository } from '../../src/domain/links/application/repositories/links.ts'
+import type { FetchLinksUseCaseRequest } from '../../src/domain/links/application/use-cases/fetch-links.ts'
 import type { Link } from '../../src/domain/links/enterprise/entities/link.ts'
 import type { Raw } from '../../src/domain/links/enterprise/value-objects/raw.ts'
 
@@ -20,10 +21,16 @@ export class InMemoryLinksRepository implements LinksRepository {
     return link
   }
 
-  async findMany(): Promise<Link[]> {
-    return Array.from(this.items.values()).sort(
+  async findMany({ originalUrl }: FetchLinksUseCaseRequest): Promise<Link[]> {
+    const links = Array.from(this.items.values()).sort(
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
     )
+
+    if (originalUrl) {
+      return links.filter(link => link.originalUrl.includes(originalUrl))
+    }
+
+    return links
   }
 
   async findByShortUrl(shortUrl: Raw): Promise<Link | null> {

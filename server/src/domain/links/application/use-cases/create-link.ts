@@ -6,8 +6,8 @@ import type { LinksRepository } from '../repositories/links.ts'
 import { LinkWithShortUrlAlreadyExistsError } from './errors/link-with-short-url-already-exists.ts'
 
 const createLinkUseCaseSchema = z.object({
-  originalUrl: z.url({ error: 'URL inválida.' }),
-  shortUrl: z.string().min(1, 'Informe a URL encurtada.'),
+  originalUrl: z.url({ error: 'URL inválida.' }).trim().toLowerCase(),
+  shortUrl: z.string().min(1, 'Informe a URL encurtada.').trim().toLowerCase(),
 })
 
 export type CreateLinkUseCaseRequest = z.input<typeof createLinkUseCaseSchema>

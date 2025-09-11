@@ -26,7 +26,7 @@ describe('Fetch links use case', () => {
       makeLink({ createdAt: new Date(2023, 1, 4) })
     )
 
-    const result = await sut.execute()
+    const result = await sut.execute({})
 
     expect(result.isRight()).toEqual(true)
     expect(result.value.links).toHaveLength(4)
@@ -35,6 +35,48 @@ describe('Fetch links use case', () => {
       expect.objectContaining({ createdAt: new Date(2023, 1, 3) }),
       expect.objectContaining({ createdAt: new Date(2023, 1, 2) }),
       expect.objectContaining({ createdAt: new Date(2023, 1, 1) }),
+    ])
+  })
+
+  it('should be able to fetch links by original URL', async () => {
+    inMemoryLinksRepository.create(
+      makeLink({
+        originalUrl: 'https://example.com/12',
+        createdAt: new Date(2023, 1, 1),
+      })
+    )
+    inMemoryLinksRepository.create(
+      makeLink({
+        originalUrl: 'https://example.com/2',
+        createdAt: new Date(2023, 1, 2),
+      })
+    )
+    inMemoryLinksRepository.create(
+      makeLink({
+        originalUrl: 'https://example.com/13',
+        createdAt: new Date(2023, 1, 3),
+      })
+    )
+    inMemoryLinksRepository.create(
+      makeLink({
+        originalUrl: 'https://example.com/3',
+        createdAt: new Date(2023, 1, 4),
+      })
+    )
+
+    const result = await sut.execute({ originalUrl: 'https://example.com/1' })
+
+    expect(result.isRight()).toEqual(true)
+    expect(result.value.links).toHaveLength(2)
+    expect(result.value.links).toEqual([
+      expect.objectContaining({
+        originalUrl: 'https://example.com/13',
+        createdAt: new Date(2023, 1, 3),
+      }),
+      expect.objectContaining({
+        originalUrl: 'https://example.com/12',
+        createdAt: new Date(2023, 1, 1),
+      }),
     ])
   })
 })

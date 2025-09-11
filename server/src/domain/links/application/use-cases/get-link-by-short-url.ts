@@ -6,7 +6,7 @@ import type { LinksRepository } from '../repositories/links.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found.ts'
 
 const getLinkByShortUrlUseCaseSchema = z.object({
-  shortUrl: z.string().min(1, 'Informe a URL encurtada.'),
+  shortUrl: z.string().min(1, 'Informe a URL encurtada.').trim().toLowerCase(),
 })
 
 type GetLinkByShortUrlUseCaseRequest = z.input<
