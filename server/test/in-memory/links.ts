@@ -1,5 +1,9 @@
 import type { UniqueEntityId } from '../../src/core/value-objects/unique-entity-id.ts'
 import type { LinksRepository } from '../../src/domain/links/application/repositories/links.ts'
+import type {
+  Csv,
+  ExportLinksUseCaseRequest,
+} from '../../src/domain/links/application/use-cases/export-links.ts'
 import type { FetchLinksUseCaseRequest } from '../../src/domain/links/application/use-cases/fetch-links.ts'
 import type { Link } from '../../src/domain/links/enterprise/entities/link.ts'
 import type { Raw } from '../../src/domain/links/enterprise/value-objects/raw.ts'
@@ -53,9 +57,22 @@ export class InMemoryLinksRepository implements LinksRepository {
     this.items.delete(linkId.toString())
   }
 
-  async *streamLinks(): AsyncIterable<Link[]> {
-    yield Array.from(this.items.values()).sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-    )
+  async *streamLinks({
+    originalUrl,
+  }: ExportLinksUseCaseRequest): AsyncIterable<Csv[]> {
+    yield Array.from(this.items.values())
+      .filter(link => {
+        if (originalUrl) {
+          return link.originalUrl.includes(originalUrl)
+        }
+        return true
+      })
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .map(item => ({
+        id: item.id.toString(),
+        original_url: item.originalUrl,
+        short_url: item.shortUrl.value,
+        created_at: item.createdAt.toISOString(),
+      }))
   }
 }

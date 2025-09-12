@@ -1,21 +1,14 @@
 /** biome-ignore-all lint/complexity/noStaticOnlyClass: this is not necessary */
 import type postgres from 'postgres'
-import { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
-import { Link } from '../../../../domain/links/enterprise/entities/link.ts'
-import { Raw } from '../../../../domain/links/enterprise/value-objects/raw.ts'
+import type { Csv } from '../../../../domain/links/application/use-cases/export-links.ts'
 
 export class PostgresLinksMapper {
-  static toDomain(
-    raw: NonNullable<postgres.Row & Iterable<postgres.Row>>
-  ): Link {
-    return Link.create(
-      {
-        originalUrl: raw.originalUrl,
-        shortUrl: Raw.create(raw.shortUrl),
-        accessCount: raw.accessCount,
-        createdAt: raw.createdAt,
-      },
-      new UniqueEntityId(raw.id)
-    )
+  static toCSV(raw: NonNullable<postgres.Row & Iterable<postgres.Row>>): Csv {
+    return {
+      id: raw.id,
+      original_url: raw.original_url,
+      short_url: raw.short_url,
+      created_at: raw.created_at,
+    }
   }
 }

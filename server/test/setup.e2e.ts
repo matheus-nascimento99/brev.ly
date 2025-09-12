@@ -5,10 +5,7 @@ beforeAll(async () => {
   await app.ready()
 })
 
-beforeEach(async () => {
-  await db.execute('TRUNCATE TABLE links RESTART IDENTITY CASCADE')
-})
-
 afterAll(async () => {
+  await db.execute('TRUNCATE TABLE links RESTART IDENTITY CASCADE')
   await app.close()
 })

@@ -6,7 +6,7 @@ import { makeIncrementLink } from '../factories/make-increment-link.ts'
 
 export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
   app.patch(
-    '/links/:link_id',
+    '/links/:link_id/increments',
     {
       schema: {
         summary: 'Increment link',

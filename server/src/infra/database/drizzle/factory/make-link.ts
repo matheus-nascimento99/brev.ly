@@ -6,7 +6,6 @@ import { schema } from '../schemas'
 
 export const makeDrizzleLink = async (params: Partial<LinkProps> = {}) => {
   const link = makeLink(params)
-
   const data = DrizzleLinksMapper.toPersistence(link)
 
   await db.insert(schema.links).values(data)

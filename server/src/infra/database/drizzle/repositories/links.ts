@@ -1,7 +1,11 @@
 import { desc, eq, ilike } from 'drizzle-orm'
 import type { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id'
 import type { LinksRepository } from '../../../../domain/links/application/repositories/links'
-import { FetchLinksUseCaseRequest } from '../../../../domain/links/application/use-cases/fetch-links.ts'
+import type {
+  Csv,
+  ExportLinksUseCaseRequest,
+} from '../../../../domain/links/application/use-cases/export-links.ts'
+import type { FetchLinksUseCaseRequest } from '../../../../domain/links/application/use-cases/fetch-links.ts'
 import type { Link } from '../../../../domain/links/enterprise/entities/link'
 import type { Raw } from '../../../../domain/links/enterprise/value-objects/raw'
 import { db, pg } from '../../db.ts'
@@ -62,13 +66,24 @@ export class DrizzleLinksRepository implements LinksRepository {
       .set(data)
       .where(eq(schema.links.id, linkId.toString()))
   }
-  async *streamLinks(): AsyncIterable<Link[]> {
-    const { sql } = db.select().from(schema.links).toSQL()
+  async *streamLinks({
+    originalUrl,
+  }: ExportLinksUseCaseRequest): AsyncIterable<Csv[]> {
+    const { sql, params } = db
+      .select()
+      .from(schema.links)
+      .where(
+        originalUrl
+          ? ilike(schema.links.originalUrl, `%${originalUrl}%`)
+          : undefined
+      )
+      .orderBy(desc(schema.links.createdAt))
+      .toSQL()
 
-    const stream = pg.unsafe(sql).cursor(100)
+    const stream = pg.unsafe(sql, params as string[]).cursor(50)
 
     for await (const links of stream) {
-      yield links.map(link => PostgresLinksMapper.toDomain(link))
+      yield links.map(link => PostgresLinksMapper.toCSV(link))
     }
   }
 

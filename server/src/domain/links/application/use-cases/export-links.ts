@@ -1,6 +1,7 @@
 import { stringify } from 'csv-stringify'
 import { PassThrough, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
+import z from 'zod'
 import { type Either, right } from '../../../../core/errors/either'
 import type { Link } from '../../enterprise/entities/link.ts'
 import type { LinksRepository } from '../repositories/links.ts'
@@ -8,6 +9,26 @@ import {
   type StorageUploader,
   StorageUploaderFolder,
 } from '../storage/storage-uploader'
+
+export enum CsvColumnKey {
+  ID = 'id',
+  ORIGINAL_URL = 'original_url',
+  SHORT_URL = 'short_url',
+  CREATED_AT = 'created_at',
+}
+
+type CsvColumn = {
+  key: CsvColumnKey
+  header: string
+}
+
+export type Csv = Record<CsvColumnKey, unknown>
+
+const exportLinksUseCaseSchema = z.object({
+  originalUrl: z.string().trim().toLowerCase().min(1).optional(),
+})
+
+export type ExportLinksUseCaseRequest = z.input<typeof exportLinksUseCaseSchema>
 
 type ExportLinksUseCaseResponse = Either<
   never,
@@ -22,20 +43,22 @@ export class ExportLinksUseCase {
     private storageUploader: StorageUploader
   ) {}
 
-  async execute(): Promise<ExportLinksUseCaseResponse> {
+  async execute({
+    originalUrl,
+  }: ExportLinksUseCaseRequest = {}): Promise<ExportLinksUseCaseResponse> {
     // Stream Links from Database
-    const stream = this.linksRepository.streamLinks()
+    const stream = this.linksRepository.streamLinks({ originalUrl })
 
     // CSV Configuration
     const delimiter = ','
 
     const header = true
 
-    const columns = [
-      { key: 'id', header: 'ID' },
-      { key: 'original_url', header: 'URL original' },
-      { key: 'short_url', header: 'URL encurtada' },
-      { key: 'created_at', header: 'Criado em' },
+    const columns: CsvColumn[] = [
+      { key: CsvColumnKey.ID, header: 'ID' },
+      { key: CsvColumnKey.ORIGINAL_URL, header: 'URL original' },
+      { key: CsvColumnKey.SHORT_URL, header: 'URL encurtada' },
+      { key: CsvColumnKey.CREATED_AT, header: 'Criado em' },
     ]
 
     const csv = stringify({

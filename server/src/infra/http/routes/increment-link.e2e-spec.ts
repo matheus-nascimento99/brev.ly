@@ -11,7 +11,7 @@ describe('Increment Link (e2e)', () => {
     const link = await makeDrizzleLink({})
 
     await request(app.server)
-      .patch(`/links/${link.id}`)
+      .patch(`/links/${link.id}/increments`)
       .expect(status.NO_CONTENT)
 
     const links = await db

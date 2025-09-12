@@ -14,6 +14,7 @@ import { deleteLinkRoute } from './routes/delete-link.ts'
 import { fetchLinksRoute } from './routes/fetch-links.ts'
 import { getLinkByShortUrlRoute } from './routes/get-link-by-short-url.ts'
 import { incrementLinkRoute } from './routes/increment-link.ts'
+import { exportLinksRoute } from './routes/export-links.ts'
 
 const app = fastify()
 
@@ -68,5 +69,6 @@ app.register(deleteLinkRoute)
 app.register(incrementLinkRoute)
 app.register(getLinkByShortUrlRoute)
 app.register(fetchLinksRoute)
+app.register(exportLinksRoute)
 
 export default app
