@@ -1,3 +1,5 @@
+import { LinksList } from '@/components/links-list'
+import { NewLinkForm } from '@/components/new-link-form'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -6,8 +8,10 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
+    <div className="mt-6 lg:mt-8 grid grid-rows-2 lg:grid-cols-2 gap-3">
+      <NewLinkForm />
+
+      <LinksList />
     </div>
   )
 }
