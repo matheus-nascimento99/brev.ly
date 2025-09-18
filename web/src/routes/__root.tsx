@@ -7,7 +7,7 @@ import * as appCss from '../index.css'
 
 const RootLayout = () => {
   return (
-    <div className="px-3 pt-8 lg:max-w-[980px] lg:m-auto lg:pt-[88px]">
+    <div className="px-3 pt-8 md:max-w-[980px] md:m-auto md:pt-[88px]">
       <Header />
       <main>
         <Outlet />

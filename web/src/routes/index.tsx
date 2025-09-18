@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   return (
-    <div className="mt-6 lg:mt-8 grid grid-rows-2 lg:grid-cols-2 gap-3">
+    <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-3">
       <NewLinkForm />
 
       <LinksList />

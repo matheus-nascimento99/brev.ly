@@ -26,12 +26,19 @@
   --text-lg--line-height: 1.5rem;
   --text-lg--font-weight: bold;
 
-  --text-md: 1rem;
+  --text-md: 0.875rem;
   --text-md--line-height: 1.125rem;
-  --text-md--font-weight: 600;
+
+  --text-md-semibold: 0.875rem;
+  --text-md-semibold--line-height: 1.125rem;
+  --text-md-semibold--font-weight: 600;
 
   --text-sm: 0.75rem;
   --text-sm--line-height: 1rem;
+
+  --text-sm-semibold: 0.75rem;
+  --text-sm-semibold--line-height: 1rem;
+  --text-sm-semibold--font-weight: 600;
 
   --text-xs: 0.625rem;
   --text-xs--line-height: 0.875rem;
@@ -40,4 +47,5 @@
 /* Base font family for the entire project */
 html {
   font-family: var(--font-family);
+  box-sizing: border-box;
 }
