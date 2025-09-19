@@ -14,7 +14,7 @@ describe('Create Link (e2e)', () => {
       })
       .expect(status.OK)
 
-    expect(result.body).toEqual(
+    expect(result.body.link).toEqual(
       expect.objectContaining({
         id: expect.any(String),
       })

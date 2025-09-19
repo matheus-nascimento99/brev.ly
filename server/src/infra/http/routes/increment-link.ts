@@ -16,9 +16,11 @@ export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
           link_id: z.uuid().describe('The ID of the link to be incrementd'),
         }),
         response: {
-          [status.OK]: linkPresenterSchema.describe(
-            'Link incrementd successfully'
-          ),
+          [status.OK]: z
+            .object({
+              link: linkPresenterSchema,
+            })
+            .describe('Link incrementd successfully'),
           [status.NOT_FOUND]: z
             .object({ message: z.string() })
             .describe('Not Found - Link does not exist'),
@@ -35,7 +37,7 @@ export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
       if (result.isRight()) {
         return reply
           .status(status.OK)
-          .send(LinksPresenter.toHTTP(result.value.link))
+          .send({ link: LinksPresenter.toHTTP(result.value.link) })
       }
 
       const error = result.value

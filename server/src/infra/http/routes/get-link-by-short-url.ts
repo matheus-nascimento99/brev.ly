@@ -16,7 +16,11 @@ export const getLinkByShortUrlRoute: FastifyPluginAsyncZod = async app => {
           short_url: z.string().describe('The link short url to get'),
         }),
         response: {
-          [status.OK]: linkPresenterSchema.describe('Link get successfully'),
+          [status.OK]: z
+            .object({
+              link: linkPresenterSchema,
+            })
+            .describe('Link get successfully'),
           [status.NOT_FOUND]: z
             .object({ message: z.string() })
             .describe('Not Found - Link does not exist'),
@@ -31,9 +35,9 @@ export const getLinkByShortUrlRoute: FastifyPluginAsyncZod = async app => {
       const result = await getLinkUseCase.execute({ shortUrl })
 
       if (result.isRight()) {
-        return reply
-          .status(status.OK)
-          .send(LinksPresenter.toHTTP(result.value.link))
+        return reply.status(status.OK).send({
+          link: LinksPresenter.toHTTP(result.value.link),
+        })
       }
 
       const error = result.value

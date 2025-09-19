@@ -14,7 +14,7 @@ describe('Increment Link (e2e)', () => {
       .patch(`/links/${link.id}/increments`)
       .expect(status.OK)
 
-    expect(result.body).toEqual(
+    expect(result.body.link).toEqual(
       expect.objectContaining({
         id: expect.any(String),
       })

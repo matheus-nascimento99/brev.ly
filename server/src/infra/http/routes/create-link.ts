@@ -20,7 +20,9 @@ export const createLinkRoute: FastifyPluginAsyncZod = async app => {
             .describe('The desired short URL (alias)'),
         }),
         response: {
-          [status.OK]: linkPresenterSchema.describe(
+          [status.OK]: z.object({
+            link: linkPresenterSchema
+          }).describe(
             'Link created successfully'
           ),
           [status.CONFLICT]: z
@@ -39,7 +41,7 @@ export const createLinkRoute: FastifyPluginAsyncZod = async app => {
       if (result.isRight()) {
         return reply
           .status(status.OK)
-          .send(LinksPresenter.toHTTP(result.value.link))
+          .send({ link: LinksPresenter.toHTTP(result.value.link) })
       }
 
       const error = result.value

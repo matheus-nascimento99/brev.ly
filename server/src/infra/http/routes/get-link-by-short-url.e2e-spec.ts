@@ -11,7 +11,7 @@ describe('Get Link by short url (e2e)', () => {
       .get(`/links/${link.shortUrl.value}/short`)
       .expect(status.OK)
 
-    expect(result.body).toMatchObject({
+    expect(result.body.link).toMatchObject({
       id: link.id.toString(),
       original_url: link.originalUrl,
       short_url: link.shortUrl.value,
