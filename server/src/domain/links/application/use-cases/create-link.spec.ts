@@ -1,6 +1,7 @@
 import { fakerPT_BR as faker } from '@faker-js/faker'
 import { makeLink } from '../../../../../test/factories/make-link.ts'
 import { InMemoryLinksRepository } from '../../../../../test/in-memory/links.ts'
+import { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
 import { CreateLinkUseCase } from './create-link'
 import { LinkWithShortUrlAlreadyExistsError } from './errors/link-with-short-url-already-exists'
 
@@ -22,6 +23,9 @@ describe('Create link use case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryLinksRepository.items).toHaveLength(1)
+    expect(result.value).toEqual({
+      link: expect.objectContaining({ id: expect.any(UniqueEntityId) }),
+    })
   })
 
   it('should not be able to create a link with same short url of another link', async () => {

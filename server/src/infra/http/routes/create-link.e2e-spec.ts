@@ -6,13 +6,19 @@ import app from '../app.ts'
 
 describe('Create Link (e2e)', () => {
   test('/links (POST)', async () => {
-    await request(app.server)
+    const result = await request(app.server)
       .post('/links')
       .send({
         originalUrl: 'https://example.com',
         shortUrl: 'test-link',
       })
-      .expect(status.CREATED)
+      .expect(status.OK)
+
+    expect(result.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+      })
+    )
 
     const links = await db.select().from(schema.links)
 

@@ -1,6 +1,7 @@
 import z from 'zod'
 import { type Either, left, right } from '../../../../core/errors/either'
 import { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
+import type { Link } from '../../enterprise/entities/link.ts'
 import type { LinksRepository } from '../repositories/links.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found.ts'
 
@@ -12,7 +13,12 @@ type IncrementLinkUseCaseRequest = z.input<
   typeof incrementLinkUseCaseRequestSchema
 >
 
-type IncrementLinkUseCaseResponse = Either<ResourceNotFoundError, unknown>
+type IncrementLinkUseCaseResponse = Either<
+  ResourceNotFoundError,
+  {
+    link: Link
+  }
+>
 
 export class IncrementLinkUseCase {
   constructor(private linksRepository: LinksRepository) {}
@@ -30,8 +36,10 @@ export class IncrementLinkUseCase {
 
     link.increment()
 
-    await this.linksRepository.save(link.id, link)
+    const linkFromRepository = await this.linksRepository.save(link.id, link)
 
-    return right({})
+    return right({
+      link: linkFromRepository,
+    })
   }
 }

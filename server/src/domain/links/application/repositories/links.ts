@@ -8,13 +8,13 @@ import type {
 import type { FetchLinksUseCaseRequest } from '../use-cases/fetch-links.ts'
 
 export abstract class LinksRepository {
-  abstract create(link: Link): Promise<void>
+  abstract create(link: Link): Promise<Link>
 
   abstract findById(linkId: UniqueEntityId): Promise<Link | null>
   abstract findMany(filter: FetchLinksUseCaseRequest): Promise<Link[]>
   abstract findByShortUrl(shortUrl: Raw): Promise<Link | null>
 
-  abstract save(linkId: UniqueEntityId, link: Link): Promise<void>
+  abstract save(linkId: UniqueEntityId, link: Link): Promise<Link>
 
   abstract streamLinks(filter: ExportLinksUseCaseRequest): AsyncIterable<Csv[]>
 

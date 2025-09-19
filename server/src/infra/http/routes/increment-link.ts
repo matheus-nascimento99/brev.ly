@@ -3,6 +3,7 @@ import { status } from 'http-status'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '../../../domain/links/application/use-cases/errors/resource-not-found.ts'
 import { makeIncrementLink } from '../factories/make-increment-link.ts'
+import { LinksPresenter, linkPresenterSchema } from '../presenters/links.ts'
 
 export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
   app.patch(
@@ -15,9 +16,9 @@ export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
           link_id: z.uuid().describe('The ID of the link to be incrementd'),
         }),
         response: {
-          [status.NO_CONTENT]: z
-            .null()
-            .describe('Link incrementd successfully'),
+          [status.OK]: linkPresenterSchema.describe(
+            'Link incrementd successfully'
+          ),
           [status.NOT_FOUND]: z
             .object({ message: z.string() })
             .describe('Not Found - Link does not exist'),
@@ -31,18 +32,18 @@ export const incrementLinkRoute: FastifyPluginAsyncZod = async app => {
 
       const result = await incrementLinkUseCase.execute({ linkId })
 
-      if (result.isLeft()) {
-        const error = result.value
-
-        switch (error.constructor) {
-          case ResourceNotFoundError:
-            return reply
-              .status(status.NOT_FOUND)
-              .send({ message: error.message })
-        }
+      if (result.isRight()) {
+        return reply
+          .status(status.OK)
+          .send(LinksPresenter.toHTTP(result.value.link))
       }
 
-      return reply.status(status.NO_CONTENT).send()
+      const error = result.value
+
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          return reply.status(status.NOT_FOUND).send({ message: error.message })
+      }
     }
   )
 }

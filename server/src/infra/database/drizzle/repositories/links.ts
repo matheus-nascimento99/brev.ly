@@ -14,11 +14,14 @@ import { DrizzleLinksMapper } from '../mappers/links.ts'
 import { schema } from '../schemas/index.ts'
 
 export class DrizzleLinksRepository implements LinksRepository {
-  async create(link: Link): Promise<void> {
+  async create(link: Link): Promise<Link> {
     const data = DrizzleLinksMapper.toPersistence(link)
 
-    await db.insert(schema.links).values(data)
+    const result = await db.insert(schema.links).values(data).returning()
+
+    return DrizzleLinksMapper.toDomain(result[0])
   }
+
   async findById(linkId: UniqueEntityId): Promise<Link | null> {
     const link = await db
       .select()
@@ -32,6 +35,7 @@ export class DrizzleLinksRepository implements LinksRepository {
 
     return DrizzleLinksMapper.toDomain(link)
   }
+
   async findMany({ originalUrl }: FetchLinksUseCaseRequest): Promise<Link[]> {
     const links = await db
       .select()
@@ -45,6 +49,7 @@ export class DrizzleLinksRepository implements LinksRepository {
 
     return links.map(DrizzleLinksMapper.toDomain)
   }
+
   async findByShortUrl(shortUrl: Raw): Promise<Link | null> {
     const link = await db
       .select()
@@ -58,13 +63,17 @@ export class DrizzleLinksRepository implements LinksRepository {
 
     return DrizzleLinksMapper.toDomain(link)
   }
-  async save(linkId: UniqueEntityId, link: Link): Promise<void> {
+
+  async save(linkId: UniqueEntityId, link: Link): Promise<Link> {
     const data = DrizzleLinksMapper.toPersistence(link)
 
-    await db
+    const result = await db
       .update(schema.links)
       .set(data)
       .where(eq(schema.links.id, linkId.toString()))
+      .returning()
+
+    return DrizzleLinksMapper.toDomain(result[0])
   }
   async *streamLinks({
     originalUrl,

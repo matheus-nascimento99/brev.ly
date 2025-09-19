@@ -11,8 +11,10 @@ import type { Raw } from '../../src/domain/links/enterprise/value-objects/raw.ts
 export class InMemoryLinksRepository implements LinksRepository {
   public items: Map<string, Link> = new Map()
 
-  async create(link: Link): Promise<void> {
+  async create(link: Link): Promise<Link> {
     this.items.set(link.id.toString(), link)
+
+    return link
   }
 
   async findById(linkId: UniqueEntityId): Promise<Link | null> {
@@ -49,8 +51,10 @@ export class InMemoryLinksRepository implements LinksRepository {
     return link
   }
 
-  async save(linkId: UniqueEntityId, link: Link): Promise<void> {
+  async save(linkId: UniqueEntityId, link: Link): Promise<Link> {
     this.items.set(linkId.toString(), link)
+
+    return link
   }
 
   async delete(linkId: UniqueEntityId): Promise<void> {

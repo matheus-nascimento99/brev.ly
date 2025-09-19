@@ -10,9 +10,15 @@ describe('Increment Link (e2e)', () => {
   test('/links (PATCH)', async () => {
     const link = await makeDrizzleLink({})
 
-    await request(app.server)
+    const result = await request(app.server)
       .patch(`/links/${link.id}/increments`)
-      .expect(status.NO_CONTENT)
+      .expect(status.OK)
+
+    expect(result.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+      })
+    )
 
     const links = await db
       .select()

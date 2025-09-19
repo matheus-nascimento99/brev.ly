@@ -14,7 +14,9 @@ export type CreateLinkUseCaseRequest = z.input<typeof createLinkUseCaseSchema>
 
 export type CreateLinkUseCaseResponse = Either<
   LinkWithShortUrlAlreadyExistsError,
-  unknown
+  {
+    link: Link
+  }
 >
 
 export class CreateLinkUseCase {
@@ -39,8 +41,10 @@ export class CreateLinkUseCase {
       shortUrl,
     })
 
-    await this.linksRepository.create(link)
+    const linkFromRepository = await this.linksRepository.create(link)
 
-    return right({})
+    return right({
+      link: linkFromRepository,
+    })
   }
 }

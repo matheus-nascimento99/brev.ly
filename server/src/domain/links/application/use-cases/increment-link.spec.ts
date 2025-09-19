@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { makeLink } from '../../../../../test/factories/make-link.ts'
 import { InMemoryLinksRepository } from '../../../../../test/in-memory/links.ts'
+import { UniqueEntityId } from '../../../../core/value-objects/unique-entity-id.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found'
 import { IncrementLinkUseCase } from './increment-link'
 
@@ -27,6 +28,9 @@ describe('Increment link use case', () => {
     expect(
       Array.from(inMemoryLinksRepository.items.values())[0].accessCount
     ).toBe(1)
+    expect(result.value).toEqual({
+      link: expect.objectContaining({ id: expect.any(UniqueEntityId) }),
+    })
   })
 
   it('should not be able to increment a non-existent link', async () => {

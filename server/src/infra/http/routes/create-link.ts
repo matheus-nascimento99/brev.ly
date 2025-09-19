@@ -3,6 +3,7 @@ import { status } from 'http-status'
 import { z } from 'zod'
 import { LinkWithShortUrlAlreadyExistsError } from '../../../domain/links/application/use-cases/errors/link-with-short-url-already-exists.ts'
 import { makeCreateLink } from '../factories/make-create-link.ts'
+import { LinksPresenter, linkPresenterSchema } from '../presenters/links.ts'
 
 export const createLinkRoute: FastifyPluginAsyncZod = async app => {
   app.post(
@@ -19,7 +20,9 @@ export const createLinkRoute: FastifyPluginAsyncZod = async app => {
             .describe('The desired short URL (alias)'),
         }),
         response: {
-          [status.CREATED]: z.null().describe('Link created successfully'),
+          [status.OK]: linkPresenterSchema.describe(
+            'Link created successfully'
+          ),
           [status.CONFLICT]: z
             .object({ message: z.string() })
             .describe('Conflict - Link already exists with same short URL'),
@@ -33,18 +36,18 @@ export const createLinkRoute: FastifyPluginAsyncZod = async app => {
 
       const result = await createLinkUseCase.execute({ originalUrl, shortUrl })
 
-      if (result.isLeft()) {
-        const error = result.value
-
-        switch (error.constructor) {
-          case LinkWithShortUrlAlreadyExistsError:
-            return reply
-              .status(status.CONFLICT)
-              .send({ message: error.message })
-        }
+      if (result.isRight()) {
+        return reply
+          .status(status.OK)
+          .send(LinksPresenter.toHTTP(result.value.link))
       }
 
-      return reply.status(status.CREATED).send()
+      const error = result.value
+
+      switch (error.constructor) {
+        case LinkWithShortUrlAlreadyExistsError:
+          return reply.status(status.CONFLICT).send({ message: error.message })
+      }
     }
   )
 }
