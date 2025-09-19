@@ -1,9 +1,20 @@
+import type { Link } from '@/dtos/link'
 import { api } from '@/lib/axios'
 
 type IncrementLinkRequest = {
   linkId: string
 }
 
+type IncrementLinkResponse = {
+  link: Link
+}
+
 export const incrementLink = async ({ linkId }: IncrementLinkRequest) => {
-  await api.patch(`/links/${linkId}/increments`)
+  const result = await api.patch<IncrementLinkResponse>(
+    `/links/${linkId}/increments`
+  )
+
+  return {
+    link: result.data.link,
+  }
 }

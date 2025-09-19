@@ -11,10 +11,12 @@ type GetLinkByShortUrlResponse = {
 
 export const getLinkByShortUrl = async ({
   shortUrl,
-}: GetLinkByShortUrlRequest): Promise<GetLinkByShortUrlResponse> => {
-  const result = await api.get<Link>(`/links/${shortUrl}/short`)
+}: GetLinkByShortUrlRequest) => {
+  const result = await api.get<GetLinkByShortUrlResponse>(
+    `/links/${shortUrl}/short`
+  )
 
   return {
-    link: result.data,
+    link: result.data.link,
   }
 }

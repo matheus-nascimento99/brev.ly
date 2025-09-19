@@ -1,3 +1,4 @@
+import type { Link } from '@/dtos/link'
 import { api } from '@/lib/axios'
 
 type CreateLinkRequest = {
@@ -5,6 +6,14 @@ type CreateLinkRequest = {
   shortUrl: string
 }
 
+type CreateLinkResponse = {
+  link: Link
+}
+
 export const createLink = async (data: CreateLinkRequest) => {
-  await api.post('/links', data)
+  const result = await api.post<CreateLinkResponse>('/links', data)
+
+  return {
+    link: result.data.link,
+  }
 }
