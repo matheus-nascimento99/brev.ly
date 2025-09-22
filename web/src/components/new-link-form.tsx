@@ -3,7 +3,10 @@
 import { createLink } from '@/http/create-link'
 import { useLinkStore } from '@/stores/links'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from './button'
 import Input from './input'
@@ -20,6 +23,7 @@ type NewLinkFormData = z.infer<typeof newLinkSchema>
 
 export const NewLinkForm = () => {
   const addLink = useLinkStore.use.addLink()
+  const setIsLoading = useLinkStore.use.setIsLoading()
 
   const {
     register,
@@ -29,6 +33,10 @@ export const NewLinkForm = () => {
   } = useForm<NewLinkFormData>({
     resolver: zodResolver(newLinkSchema),
   })
+
+  useEffect(() => {
+    setIsLoading(isSubmitting)
+  }, [isSubmitting, setIsLoading])
 
   // ✅ Função para receber os dados
   const onSubmit = async ({ originalUrl, shortUrl }: NewLinkFormData) => {
@@ -42,9 +50,14 @@ export const NewLinkForm = () => {
 
       reset()
 
-      console.log('sucesso!', link)
+      toast.success('Link criado com sucesso!')
     } catch (error) {
-      console.error(error)
+      const isAxiosError = error instanceof AxiosError
+      const description = isAxiosError
+        ? error.response?.data.message
+        : 'Não foi possível criar o link, tente novamente mais tarde.'
+
+      toast.error(description)
     }
   }
 

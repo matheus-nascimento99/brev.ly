@@ -46,7 +46,6 @@
 
 /* Base font family for the entire project */
 html {
-  font-family: var(--font-family);
   box-sizing: border-box;
 }
 

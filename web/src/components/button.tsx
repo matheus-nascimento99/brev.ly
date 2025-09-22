@@ -8,7 +8,7 @@ export const button = tv({
     '!text-md-semibold',
     'border border-transparent',
     'transition-colors duration-200',
-    'disabled:opacity-50 disabled:cursor-not-allowed',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:!border-transparent',
   ],
   variants: {
     variant: {

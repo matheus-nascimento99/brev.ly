@@ -2,6 +2,7 @@
 
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { Toaster } from 'sonner'
 import { Header } from '../components/header'
 import * as appCss from '../index.css'
 
@@ -13,6 +14,7 @@ const RootLayout = () => {
         <Outlet />
       </main>
       <TanStackRouterDevtools />
+      <Toaster richColors />
     </div>
   )
 }
