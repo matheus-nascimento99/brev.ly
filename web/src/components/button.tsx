@@ -3,6 +3,7 @@ import { tv, type VariantProps } from 'tailwind-variants'
 
 export const button = tv({
   base: [
+    'cursor-pointer',
     'inline-flex items-center justify-center',
     '!text-md-semibold',
     'border border-transparent',
@@ -18,11 +19,11 @@ export const button = tv({
       ],
     },
     size: {
-      sm: 'h-8 text-sm-semibold rounded',
+      sm: 'h-8 text-sm rounded p-2',
       md: 'h-12 rounded-lg',
     },
     iconOnly: {
-      true: 'gap-0 size-2',
+      true: 'gap-0 size-8',
       false: 'gap-1.5',
     },
     fullWidth: {

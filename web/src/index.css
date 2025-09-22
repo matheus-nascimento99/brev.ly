@@ -49,3 +49,12 @@ html {
   font-family: var(--font-family);
   box-sizing: border-box;
 }
+
+@keyframes moveBar {
+  0% {
+    left: -25%;
+  }
+  100% {
+    left: 100%;
+  }
+}

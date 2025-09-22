@@ -1,5 +1,7 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: not necessary */
 
+import { createLink } from '@/http/create-link'
+import { useLinkStore } from '@/stores/links'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -17,6 +19,8 @@ const newLinkSchema = z.object({
 type NewLinkFormData = z.infer<typeof newLinkSchema>
 
 export const NewLinkForm = () => {
+  const addLink = useLinkStore.use.addLink()
+
   const {
     register,
     handleSubmit,
@@ -27,18 +31,28 @@ export const NewLinkForm = () => {
   })
 
   // ✅ Função para receber os dados
-  const onSubmit = async (data: NewLinkFormData) => {
-    console.log('Dados do formulário:', data)
+  const onSubmit = async ({ originalUrl, shortUrl }: NewLinkFormData) => {
+    try {
+      const { link } = await createLink({
+        originalUrl,
+        shortUrl,
+      })
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
+      addLink(link)
 
-    // aqui você pode chamar sua API, mutation, etc.
-    // depois que salvar, limpamos o form:
-    reset()
+      reset()
+
+      console.log('sucesso!', link)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-white p-6 rounded-lg col-span-2 md:col-span-1"
+    >
       <fieldset>
         <div className="flex flex-col gap-6">
           <legend className="text-lg text-gray-600">Novo link</legend>
