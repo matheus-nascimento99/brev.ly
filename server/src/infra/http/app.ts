@@ -47,7 +47,7 @@ app.setErrorHandler((error, _, reply) => {
 //confiigure o cors para todas as origens e metodos
 app.register(fastifyCors, {
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
 })
 
 app.register(fastifySwagger, {

@@ -29,7 +29,7 @@ export class GetLinkByShortUrlUseCase {
     const { shortUrl: originalShortUrl } =
       getLinkByShortUrlUseCaseSchema.parse(request)
 
-    const shortUrl = Raw.createFromText(originalShortUrl)
+    const shortUrl = Raw.create(originalShortUrl)
 
     const link = await this.linksRepository.findByShortUrl(shortUrl)
 
