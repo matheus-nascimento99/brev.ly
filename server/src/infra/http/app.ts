@@ -11,10 +11,10 @@ import {
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link.ts'
 import { deleteLinkRoute } from './routes/delete-link.ts'
+import { exportLinksRoute } from './routes/export-links.ts'
 import { fetchLinksRoute } from './routes/fetch-links.ts'
 import { getLinkByShortUrlRoute } from './routes/get-link-by-short-url.ts'
 import { incrementLinkRoute } from './routes/increment-link.ts'
-import { exportLinksRoute } from './routes/export-links.ts'
 
 const app = fastify()
 
@@ -44,7 +44,11 @@ app.setErrorHandler((error, _, reply) => {
   })
 })
 
-app.register(fastifyCors, { origin: '*' })
+//confiigure o cors para todas as origens e metodos
+app.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+})
 
 app.register(fastifySwagger, {
   openapi: {
