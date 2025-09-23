@@ -7,6 +7,12 @@ export default defineConfig({
     globals: true,
     setupFiles: ['test/setup.e2e.ts'],
     include: ['src/infra/http/routes/*.e2e-spec.ts'],
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
   },
   plugins: [
     tsConfigPaths(),
