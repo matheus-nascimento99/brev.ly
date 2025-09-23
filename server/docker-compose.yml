@@ -14,7 +14,8 @@ services:
       - CLOUDFLARE_BUCKET=${CLOUDFLARE_BUCKET}
       - CLOUDFLARE_PUBLIC_URL=${CLOUDFLARE_PUBLIC_URL}
     depends_on:
-      - bd
+      bd:
+        condition: service_healthy
 
   bd:
     image: bitnami/postgresql:17.5.0
@@ -26,6 +27,11 @@ services:
       - POSTGRESQL_DATABASE=brevly
     volumes:
       - "./docker:/docker-entrypoint-initdb.d"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker -d brevly"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   docker:
