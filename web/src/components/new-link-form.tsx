@@ -52,10 +52,13 @@ export const NewLinkForm = () => {
 
       toast.success('Link criado com sucesso!')
     } catch (error) {
+      console.error('Error creating link:', error)
+
       const isAxiosError = error instanceof AxiosError
-      const description = isAxiosError
-        ? error.response?.data.message
-        : 'Não foi possível criar o link, tente novamente mais tarde.'
+      const description =
+        isAxiosError && error.response?.data?.message
+          ? error.response.data.message
+          : 'Não foi possível criar o link, tente novamente mais tarde.'
 
       toast.error(description)
     }

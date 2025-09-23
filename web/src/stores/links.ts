@@ -52,7 +52,7 @@ const useLinkStoreBase = create<LinkState>()(
 
     const updateLink = (linkId: string, link: Link) =>
       set(state => {
-        state.links.set(linkId, link)
+        state.links = new Map(state.links).set(linkId, link)
       })
 
     const setIsLoading = (value: boolean) =>

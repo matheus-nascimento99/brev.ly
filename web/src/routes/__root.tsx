@@ -3,13 +3,11 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Toaster } from 'sonner'
-import { Header } from '../components/header'
 import * as appCss from '../index.css'
 
 const RootLayout = () => {
   return (
     <div className="px-3 py-8 md:max-w-[980px] md:m-auto md:pt-[88px]">
-      <Header />
       <main>
         <Outlet />
       </main>
