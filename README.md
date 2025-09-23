@@ -184,7 +184,11 @@ npm run build
 ### Backend (.env)
 ```env
 PORT=3333
+// setup manual
 DATABASE_URL=postgresql://user:password@localhost:5432/brevly
+
+//setup docker
+DATABASE_URL=postgresql://docker:docker@bd:5432/brevly
 
 # Cloudflare R2 (para upload de CSVs)
 CLOUDFLARE_ACCOUNT_ID=your_account_id
