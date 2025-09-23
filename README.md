@@ -70,7 +70,6 @@ Isso irá:
 - Configurar o banco PostgreSQL
 - Executar as migrações
 - Iniciar a API na porta 3333
-- Iniciar o frontend na porta 5173
 
 ### Opção 2: Execução manual
 
