@@ -72,7 +72,7 @@ Um encurtador de URLs moderno e completo, construído com Node.js/Fastify no bac
 # Clone e execute
 git clone <repository-url>
 cd brev.ly
-docker-compose up -d
+docker compose up -d
 ```
 
 **Pronto!** 🎉 A aplicação estará rodando em:
@@ -85,22 +85,22 @@ docker-compose up -d
 
 ```bash
 # Ver logs dos serviços
-docker-compose logs -f
+docker compose logs -f
 
 # Ver apenas logs do backend
-docker-compose logs -f app
+docker compose logs -f app
 
 # Ver apenas logs do frontend  
-docker-compose logs -f web
+docker compose logs -f web
 
 # Parar todos os serviços
-docker-compose down
+docker compose down
 
 # Rebuild das imagens (após mudanças no código)
-docker-compose up -d --build
+docker compose up -d --build
 
 # Limpar tudo (containers, volumes, imagens)
-docker-compose down -v --rmi all
+docker compose down -v --rmi all
 ```
 
 ---
@@ -162,7 +162,7 @@ npm run dev
 ### � Estrutura do Projeto
 ```
 brev.ly/
-├── docker-compose.yml    # Orquestração dos serviços
+├── docker compose.yml    # Orquestração dos serviços
 ├── docker/              # Scripts de inicialização do DB
 ├── server/              # Backend API (Node.js + Fastify)
 │   ├── Dockerfile       # Container otimizado para produção
@@ -203,11 +203,11 @@ brev.ly/
 ### Docker (Recomendado)
 ```bash
 # Testes do backend no container
-docker-compose exec app npm run test
-docker-compose exec app npm run test:e2e
+docker compose exec app npm run test
+docker compose exec app npm run test:e2e
 
 # Build de testes
-docker-compose exec app npm run build
+docker compose exec app npm run build
 ```
 
 ### Local
@@ -229,13 +229,13 @@ npm run test:coverage
 ### Docker (Produção)
 ```bash
 # Build das imagens otimizadas
-docker-compose build
+docker compose build
 
 # Deploy completo
-docker-compose up -d
+docker compose up -d
 
 # Verificar saúde dos serviços
-docker-compose ps
+docker compose ps
 ```
 
 ### Build manual
@@ -250,10 +250,10 @@ cd web && npm run build
 ### 📊 Monitoramento
 ```bash
 # Logs em tempo real
-docker-compose logs -f
+docker compose logs -f
 
 # Status dos containers
-docker-compose ps
+docker compose ps
 
 # Recursos utilizados
 docker stats
@@ -262,7 +262,7 @@ docker stats
 ## ⚙️ Configuração de Ambiente
 
 ### � Docker (Zero Config)
-Com Docker, **não é necessário configurar nada!** As variáveis já estão definidas no `docker-compose.yml`.
+Com Docker, **não é necessário configurar nada!** As variáveis já estão definidas no `docker compose.yml`.
 
 ### 🔧 Setup Manual
 
@@ -309,10 +309,10 @@ docker system prune -a
 **Banco não conecta:**
 ```bash
 # Verificar logs do banco
-docker-compose logs bd
+docker compose logs bd
 
 # Restart do banco
-docker-compose restart bd
+docker compose restart bd
 ```
 
 **Frontend não encontra API:**
@@ -335,13 +335,13 @@ git checkout -b feature/nova-funcionalidade
 
 4. **Desenvolva** usando Docker
 ```bash
-docker-compose up -d
+docker compose up -d
 # Faça suas alterações...
 ```
 
 5. **Teste** suas mudanças
 ```bash
-docker-compose exec app npm run test
+docker compose exec app npm run test
 ```
 
 6. **Commit** e **Push**
