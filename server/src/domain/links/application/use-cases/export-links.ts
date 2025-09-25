@@ -14,6 +14,7 @@ export enum CsvColumnKey {
   ID = 'id',
   ORIGINAL_URL = 'original_url',
   SHORT_URL = 'short_url',
+  ACCESS_COUNT = 'access_count',  
   CREATED_AT = 'created_at',
 }
 
@@ -58,6 +59,7 @@ export class ExportLinksUseCase {
       { key: CsvColumnKey.ID, header: 'ID' },
       { key: CsvColumnKey.ORIGINAL_URL, header: 'URL original' },
       { key: CsvColumnKey.SHORT_URL, header: 'URL encurtada' },
+      { key: CsvColumnKey.ACCESS_COUNT, header: 'Contagem de acessos' },
       { key: CsvColumnKey.CREATED_AT, header: 'Criado em' },
     ]
 

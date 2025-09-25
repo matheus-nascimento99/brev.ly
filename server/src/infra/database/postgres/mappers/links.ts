@@ -8,6 +8,7 @@ export class PostgresLinksMapper {
       id: raw.id,
       original_url: raw.original_url,
       short_url: raw.short_url,
+      access_count: raw.access_count,
       created_at: raw.created_at,
     }
   }

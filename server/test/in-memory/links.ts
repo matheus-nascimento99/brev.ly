@@ -76,6 +76,7 @@ export class InMemoryLinksRepository implements LinksRepository {
         id: item.id.toString(),
         original_url: item.originalUrl,
         short_url: item.shortUrl.value,
+        access_count: item.accessCount,
         created_at: item.createdAt.toISOString(),
       }))
   }
