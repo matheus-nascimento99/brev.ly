@@ -1,18 +1,21 @@
 services:
+  web:
+    build:
+      context: ./web 
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+
   app:
     build:
-      context: .
+      context: ./server 
       dockerfile: Dockerfile
     ports:
       - "3333:3333"
-    environment:
-      - PORT=${PORT}
-      - DATABASE_URL=${DATABASE_URL}
-      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
-      - CLOUDFLARE_ACCESS_KEY_ID=${CLOUDFLARE_ACCESS_KEY_ID}
-      - CLOUDFLARE_SECRET_ACCESS_KEY=${CLOUDFLARE_SECRET_ACCESS_KEY}
-      - CLOUDFLARE_BUCKET=${CLOUDFLARE_BUCKET}
-      - CLOUDFLARE_PUBLIC_URL=${CLOUDFLARE_PUBLIC_URL}
+    env_file:
+      - ./server/.env
     depends_on:
       bd:
         condition: service_healthy
